@@ -17,13 +17,14 @@ entity RfbUser {
 }
 
 relationship OneToOne {
-	RfbEventAttendance{rfbUser} to RfbUser
-    RfbUser{homeLocation} to RfbLocation
+	RfbUser{homeLocation} to RfbLocation
 }
 
 relationship OneToMany {
 	RfbLocation{rfbEvent} to RfbEvent,
-    RfbEvent{rfbEventAttendance} to RfbEventAttendance
+    RfbEvent{rfbEventAttendance} to RfbEventAttendance,
+    RfbUser{rfbEventAttendance} to RfbEventAttendance
+
 }
 
 // Set pagination options
@@ -34,7 +35,7 @@ paginate RfbLocation, RfbEvent with pagination
  dto * with mapstruct
 
 // Set service options to all except few
-service all with serviceImpl 
+service all with serviceImpl
 
 // Set an angular suffix
 // angularSuffix * with mySuffix

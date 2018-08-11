@@ -1,0 +1,40 @@
+entity RfbLocation {
+  locationName String,
+  runDayOfWeek Integer
+}
+
+entity RfbEvent {
+  eventDate LocalDate,
+  eventCode String
+}
+
+entity RfbEventAttendance {
+   attendanceDate LocalDate
+}
+
+entity RfbUser {
+  userName String
+}
+
+relationship OneToOne {
+	RfbEventAttendance{rfbUser} to RfbUser
+    RfbUser{homeLocation} to RfbLocation
+}
+
+relationship OneToMany {
+	RfbLocation{rfbEvent} to RfbEvent,
+    RfbEvent{rfbEventAttendance} to RfbEventAttendance
+}
+
+// Set pagination options
+paginate RfbEventAttendance with infinite-scroll
+paginate RfbLocation, RfbEvent with pagination
+
+// Use Data Transfert Objects (DTO)
+ dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl 
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
